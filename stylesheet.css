@@ -35,6 +35,6 @@ li {
 .leftSided {
     align-items: flex-start;
 }
-#invisible {
+.invisible {
     display:none;
 }
