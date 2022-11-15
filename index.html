@@ -7,8 +7,47 @@
     <title>Web Development Quiz</title>
     <link rel="stylesheet" href="./stylesheet.css">
 </head>
+
 <body>
-    <nav></nav>
+    <nav>
+        <a>View HighScores</a>
+        <p>Time: </p>
+    </nav>
+
+    <main>
+        <div id="homePhase">
+            <h1>Web Development Quiz</h1>
+            <p>Answer the following programming related questions within the time limit. Record your high scores to improve.</p>
+            <button id="startButton">Start</button>
+        </div>
+
+        <div id="questionPhase" class="leftSided">
+            <h2>Question <span id="questionNumber">1</span>: <span id="questionContent">dummy</span></h2>
+            <ol>
+                <li><button id="option1">option 1</button></li>
+                <li><button id="option2">option 2</button></li>
+                <li><button id="option3">option 3</button></li>
+                <li><button id="option4">option 4</button></li>
+            </ol>
+        </div>
+
+        <div id="finishPhase" class="leftSided">
+            <h3>Finished!</h3>
+            <p>Score: <span id="score">0</span></p>
+            <p>Enter Name: <input type="text" id="name" value="Input your name"> <button id="submit">Submit</button></p>
+        </div>
+
+        <div id="highScorePhase" class ="leftSided">
+            <h2>High Scores</h2>
+            <ol>
+                <li>Test</li>
+            </ol>
+            <button>Go back</button>
+            <button>Clear</button>
+        </div>
+        
+
+    </main>
 
     <script src="./script.js"></script>
 </body>
