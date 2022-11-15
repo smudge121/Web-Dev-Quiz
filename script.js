@@ -5,8 +5,13 @@ var highScorePhase = document.getElementById("highScorePhase");
 
 var startButton = document.querySelector("#startButton");
 var questionNumber = document.querySelector("#questionNumber");
+var timerText = document.querySelector("#timerText");
+var scoreText = document.querySelector("#score");
 
 var qNum = 0;
+var timer;
+var secondsLeft = 60;
+var score = 0;
 
 
 startButton.addEventListener("click", function(event){
@@ -14,7 +19,9 @@ startButton.addEventListener("click", function(event){
     homePhase.classList.add("invisible");
     questionPhase.classList.remove("invisible");
 
+    score = 0;
     QuestionInit(qNum);
+    StartTimer();
 
 });
 
@@ -34,15 +41,54 @@ function QuestionInit(qNum){
     for (var i= 0 ; i < questions.children.length; i++)
     {
         for (var j = 0; j < 4; j++)
-        questions.children[j].firstChild.textContent = Object.entries(questionBank)[qNum][1][j+1];  // second is always a 1, last is answer
+        {
+            questions.children[j].firstChild.textContent = Object.entries(questionBank)[qNum][1][j+1];  // second is always a 1, last is answer
+        }
     }
 
 }
-function answerClick(thisId)
+function answerClick(thisId) // inline onclick function
 {
+    if (Object.entries(questionBank)[qNum][1][5] == thisId)
+    {
+        score += 100;
+    }
+    else
+    {
+        score -= 15;
+    }
+
     qNum++;
+    if(Object.keys(questionBank).length <= qNum)
+    {
+        Finish();
+        return;
+    }
     QuestionInit(qNum);
 }
+function StartTimer()
+{
+    timer = setInterval(function(){
+
+        secondsLeft--;
+        timerText.textContent = secondsLeft;
+
+        if (secondsLeft == 0)
+        {
+            Finish();
+        }
+
+    }, 1000);
+}
+function Finish()
+{
+    clearInterval(timer);
+    timerText.textContent='';
+    scoreText.textContent = score;
+    finishPhase.classList.remove("invisible");
+    questionPhase.classList.add("invisible");
+}
+
 
 questionPhase.classList.add("invisible");
 finishPhase.classList.add("invisible");
