@@ -13,6 +13,8 @@ var nameField = document.querySelector("#name");
 var scoreBoard = document.querySelector("#scoreBoard")
 var backButton = document.querySelector("#back");
 var clearButton = document.querySelector("#clear");
+var viewButton = document.querySelector("#view");
+var timerField = document.querySelector("#time");
 
 var qNum = 0;
 var timer;
@@ -26,7 +28,9 @@ var pastScores = [];
 startButton.addEventListener("click", function(event){
 
     homePhase.classList.add("invisible");
+    viewButton.classList.add("invisible");
     questionPhase.classList.remove("invisible");
+    timerField.classList.remove("invisible");
 
     qNum = 0;
     score = 0;
@@ -64,7 +68,15 @@ clearButton.addEventListener("click", function(){
 backButton.addEventListener("click",function(){
     highScorePhase.classList.add("invisible");
     homePhase.classList.remove("invisible");
+    viewButton.classList.remove("invisible");
     EraseScoreText();
+});
+
+viewButton.addEventListener("click",function(){
+    homePhase.classList.add("invisible");
+    viewButton.classList.add("invisible");
+    highScorePhase.classList.remove("invisible");
+    WritePastScores();
 })
 
 
@@ -151,6 +163,7 @@ function Finish()
 
     finishPhase.classList.remove("invisible");
     questionPhase.classList.add("invisible");
+    timerField.classList.add("invisible");
 }
 function WritePastScores()
 {
@@ -170,5 +183,6 @@ function EraseScoreText()
 questionPhase.classList.add("invisible");
 finishPhase.classList.add("invisible");
 highScorePhase.classList.add("invisible");
+timerField.classList.add("invisible");
 pastScores = JSON.parse(localStorage.getItem("pastScores") || '[]') ;
 
