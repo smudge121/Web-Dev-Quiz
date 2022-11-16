@@ -28,8 +28,6 @@ startButton.addEventListener("click", function(event){
     homePhase.classList.add("invisible");
     questionPhase.classList.remove("invisible");
 
-    pastScores = JSON.parse(localStorage.getItem("pastScores") || '[]') ;
-
     qNum = 0;
     score = 0;
     QuestionInit(qNum);
@@ -47,12 +45,7 @@ submitButton.addEventListener("click", function(){
         _score: score 
     };
 
-    for (var i = 0; i < pastScores.length; i++)
-    {
-        var item = document.createElement("li");
-        item.textContent = "Name: " + pastScores[i]._name + " Score: " + pastScores[i]._score;
-        scoreBoard.appendChild(item);
-    }
+    WritePastScores();
 
     pastScores.push(currentScore);
     localStorage.setItem("pastScores",JSON.stringify(pastScores));
@@ -65,12 +58,13 @@ submitButton.addEventListener("click", function(){
 clearButton.addEventListener("click", function(){
     localStorage.removeItem("pastScores");
     pastScores.splice(0,pastScores.length);
-    scoreBoard.innerHTML="";
+    EraseScoreText();
 });
 
 backButton.addEventListener("click",function(){
     highScorePhase.classList.add("invisible");
     homePhase.classList.remove("invisible");
+    EraseScoreText();
 })
 
 
@@ -152,13 +146,29 @@ function Finish()
     clearInterval(timer);
     clearInterval(statTimer);
     timerText.textContent='';
+    answerText.textContent ='';
     scoreText.textContent = score;
+
     finishPhase.classList.remove("invisible");
     questionPhase.classList.add("invisible");
+}
+function WritePastScores()
+{
+    for (var i = 0; i < pastScores.length; i++)
+    {
+        var item = document.createElement("li");
+        item.textContent = "Name: " + pastScores[i]._name + " Score: " + pastScores[i]._score;
+        scoreBoard.appendChild(item);
+    }
+}
+function EraseScoreText()
+{
+    scoreBoard.innerHTML="";
 }
 
 
 questionPhase.classList.add("invisible");
 finishPhase.classList.add("invisible");
 highScorePhase.classList.add("invisible");
+pastScores = JSON.parse(localStorage.getItem("pastScores") || '[]') ;
 
