@@ -11,6 +11,8 @@ var answerText = document.querySelector("#answerStatus");
 var submitButton = document.querySelector("#submit");
 var nameField = document.querySelector("#name");
 var scoreBoard = document.querySelector("#scoreBoard")
+var backButton = document.querySelector("#back");
+var clearButton = document.querySelector("#clear");
 
 var qNum = 0;
 var timer;
@@ -28,6 +30,7 @@ startButton.addEventListener("click", function(event){
 
     pastScores = JSON.parse(localStorage.getItem("pastScores") || '[]') ;
 
+    qNum = 0;
     score = 0;
     QuestionInit(qNum);
     StartTimer();
@@ -57,6 +60,17 @@ submitButton.addEventListener("click", function(){
     var item = document.createElement("li");
     item.textContent = "Name: " + currentScore._name + " Score: " + currentScore._score;
     scoreBoard.appendChild(item);
+});
+
+clearButton.addEventListener("click", function(){
+    localStorage.removeItem("pastScores");
+    pastScores.splice(0,pastScores.length);
+    scoreBoard.innerHTML="";
+});
+
+backButton.addEventListener("click",function(){
+    highScorePhase.classList.add("invisible");
+    homePhase.classList.remove("invisible");
 })
 
 
