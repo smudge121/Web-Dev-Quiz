@@ -7,9 +7,11 @@ var startButton = document.querySelector("#startButton");
 var questionNumber = document.querySelector("#questionNumber");
 var timerText = document.querySelector("#timerText");
 var scoreText = document.querySelector("#score");
+var answerText = document.querySelector("#answerStatus");
 
 var qNum = 0;
 var timer;
+var statTimer;
 var secondsLeft = 60;
 var score = 0;
 
@@ -47,15 +49,21 @@ function QuestionInit(qNum){
     }
 
 }
-function answerClick(thisId) // inline onclick function
+function answerClick(thisId) // inline function
 {
     if (Object.entries(questionBank)[qNum][1][5] == thisId)
     {
         score += 100;
+        answerText.textContent='Correct!';
+        clearInterval(statTimer);
+        StatusTimer();
     }
     else
     {
         score -= 15;
+        answerText.textContent='Incorrect :(';
+        clearInterval(statTimer);
+        StatusTimer();
     }
 
     qNum++;
@@ -80,9 +88,22 @@ function StartTimer()
 
     }, 1000);
 }
+function StatusTimer()
+{
+    var seconds = 5;
+    statTimer = setInterval(function(){
+        seconds--;
+        if (seconds == 0)
+        {
+            answerText.textContent ='';
+            clearInterval(statTimer);
+        }
+    }, 1000);
+}
 function Finish()
 {
     clearInterval(timer);
+    clearInterval(statTimer);
     timerText.textContent='';
     scoreText.textContent = score;
     finishPhase.classList.remove("invisible");
