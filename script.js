@@ -8,6 +8,9 @@ var questionNumber = document.querySelector("#questionNumber");
 var timerText = document.querySelector("#timerText");
 var scoreText = document.querySelector("#score");
 var answerText = document.querySelector("#answerStatus");
+var submitButton = document.querySelector("#submit");
+var nameField = document.querySelector("#name");
+var scoreBoard = document.querySelector("#scoreBoard")
 
 var qNum = 0;
 var timer;
@@ -15,17 +18,46 @@ var statTimer;
 var secondsLeft = 60;
 var score = 0;
 
+var pastScores = [];
+
 
 startButton.addEventListener("click", function(event){
 
     homePhase.classList.add("invisible");
     questionPhase.classList.remove("invisible");
 
+    pastScores = JSON.parse(localStorage.getItem("pastScores") || '[]') ;
+
     score = 0;
     QuestionInit(qNum);
     StartTimer();
 
 });
+
+submitButton.addEventListener("click", function(){
+    
+    finishPhase.classList.add("invisible");
+    highScorePhase.classList.remove("invisible");
+
+    var currentScore = {
+        _name: nameField.value,
+        _score: score 
+    };
+
+    for (var i = 0; i < pastScores.length; i++)
+    {
+        var item = document.createElement("li");
+        item.textContent = "Name: " + pastScores[i]._name + " Score: " + pastScores[i]._score;
+        scoreBoard.appendChild(item);
+    }
+
+    pastScores.push(currentScore);
+    localStorage.setItem("pastScores",JSON.stringify(pastScores));
+
+    var item = document.createElement("li");
+    item.textContent = "Name: " + currentScore._name + " Score: " + currentScore._score;
+    scoreBoard.appendChild(item);
+})
 
 
 var questionBank = {
@@ -61,6 +93,7 @@ function answerClick(thisId) // inline function
     else
     {
         score -= 15;
+        secondsLeft-=10;
         answerText.textContent='Incorrect :(';
         clearInterval(statTimer);
         StatusTimer();
