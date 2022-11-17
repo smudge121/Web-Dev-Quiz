@@ -83,7 +83,7 @@ viewButton.addEventListener("click",function(){
     WritePastScores();
 })
 
-
+// Question bank stores the question, the 4 answer choices, and an integer refering to the index of the correct answer, between (1-4, 0 is the question itself).
 var questionBank = {
     1 : ["Which is not a commonly used data type?", "String", "Booleans", "alerts", "numbers", 3],
     2 : ["Which code is correct to begin a for loop?", "var i = 0;", "int i = 0;", "var i < 1;", "i = 0;", 1],
