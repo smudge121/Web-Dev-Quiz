@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Development Quiz</title>
+    <link rel="reset" href="./reset.css">
     <link rel="stylesheet" href="./stylesheet.css">
 </head>
 
@@ -14,7 +15,9 @@
         <p id="time">Time: <span id="timerText"></span></p>
     </nav>
 
-    <main>
+    <main>  <!--Main stores 4 Screen sections as 'div' that will disappear and reappear depending on user play state-->
+
+        <!--Screen when user first opens site-->
         <div id="homePhase">
             <h1>Web Development Quiz</h1>
             <p>Answer the following programming related questions within the time limit. Record your high scores to improve. 
@@ -22,6 +25,7 @@
             <button id="startButton">Start</button>
         </div>
 
+        <!--Screen when user is playing the game  -->
         <div id="questionPhase" class="leftSided">
             <h2>Question <span id="questionNumber">1</span>: <span id="questionContent">dummy</span></h2>
             <ol class="questions">
@@ -33,12 +37,14 @@
             <p id="answerStatus"></p>
         </div>
 
+        <!-- Screen that displays user's score after game is finished -->
         <div id="finishPhase" class="leftSided">
             <h3>Finished!</h3>
             <p>Score: <span id="score">0</span></p>
             <p>Enter Name: <input type="text" id="name" value="Input your name"> <button id="submit">Submit</button></p>
         </div>
 
+        <!-- Screen to display past high scores -->
         <div id="highScorePhase" class ="leftSided">
             <h2>High Scores</h2>
             <ol id="scoreBoard">

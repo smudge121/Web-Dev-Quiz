@@ -1,10 +1,13 @@
+// variables to store the four Screen sections
 var homePhase = document.getElementById("homePhase");
 var questionPhase = document.getElementById("questionPhase");
 var finishPhase = document.getElementById("finishPhase");
 var highScorePhase = document.getElementById("highScorePhase");
 
+// All Buttons and text fields that need to be updated
 var startButton = document.querySelector("#startButton");
 var questionNumber = document.querySelector("#questionNumber");
+var questionContent = document.querySelector("#questionContent");
 var timerText = document.querySelector("#timerText");
 var scoreText = document.querySelector("#score");
 var answerText = document.querySelector("#answerStatus");
@@ -32,8 +35,9 @@ startButton.addEventListener("click", function(event){
     questionPhase.classList.remove("invisible");
     timerField.classList.remove("invisible");
 
-    qNum = 0;
+    qNum = 0;  // reset values for game start
     score = 0;
+    secondsLeft = 60;
     QuestionInit(qNum);
     StartTimer();
 
@@ -49,7 +53,7 @@ submitButton.addEventListener("click", function(){
         _score: score 
     };
 
-    WritePastScores();
+    WritePastScores();  // writes past scores to screen then saves and writes current score
 
     pastScores.push(currentScore);
     localStorage.setItem("pastScores",JSON.stringify(pastScores));
@@ -81,36 +85,38 @@ viewButton.addEventListener("click",function(){
 
 
 var questionBank = {
-    1 : ["Question 1", "Q1 answer 1", "Q1 answer 2", "Q1 answer 3", "Q1 answer 4", 1],
-    2 : ["Question 2", "Q2 answer 1", "Q2 answer 2", "Q2 answer 3", "Q2 answer 4", 1],
-    3 : ["Question 3", "Q3 answer 1", "Q3 answer 2", "Q3 answer 3", "Q3 answer 4", 1],
-    4 : ["Question 4", "answer 1", "answer 2", "answer 3", "answer 4", 1],
-    5 : ["Question 5", "answer 1", "answer 2", "answer 3", "answer 4", 1]
+    1 : ["Which is not a commonly used data type?", "String", "Booleans", "alerts", "numbers", 3],
+    2 : ["Which code is correct to begin a for loop?", "var i = 0;", "int i = 0;", "var i < 1;", "i = 0;", 1],
+    3 : ["Which function adds a new element to an array?", ".remove()", ".add(content);", ".push('hello');", ".push();", 3],
+    4 : ["Arrays can store what?", "numbers", "other arrays", "objects", "all of the above", 4],
+    5 : ["Which returns an error?", "var i = 0; i = '0';", "var b = 'string'; b[0] = 'a';", "console.log('c');", "var c = 3; console.log(c);", 2]
 };
 
 //////////////////////////////////////////
 
-function QuestionInit(qNum){
+function QuestionInit(qNum){  // loads the question and answer choices to the screen
     var questions = document.querySelector("ol.questions");
-    for (var i= 0 ; i < questions.children.length; i++)
+    for (var i= 0 ; i < questions.children.length; i++)  
     {
         for (var j = 0; j < 4; j++)
         {
             questions.children[j].firstChild.textContent = Object.entries(questionBank)[qNum][1][j+1];  // second is always a 1, last is answer
         }
     }
+    questionNumber.textContent = qNum + 1;
+    questionContent.textContent = Object.entries(questionBank)[qNum][1][0];
 
 }
 function answerClick(thisId) // inline function
 {
-    if (Object.entries(questionBank)[qNum][1][5] == thisId)
+    if (Object.entries(questionBank)[qNum][1][5] == thisId)  //if id of button pressed matches the correct answer stored in question bank
     {
         score += 100;
         answerText.textContent='Correct!';
         clearInterval(statTimer);
         StatusTimer();
     }
-    else
+    else  // wrong answers
     {
         score -= 15;
         secondsLeft-=10;
@@ -127,7 +133,7 @@ function answerClick(thisId) // inline function
     }
     QuestionInit(qNum);
 }
-function StartTimer()
+function StartTimer()  // game timer
 {
     timer = setInterval(function(){
 
@@ -141,7 +147,7 @@ function StartTimer()
 
     }, 1000);
 }
-function StatusTimer()
+function StatusTimer()  // when timer runs out, removes 'correct' or 'incorrect' text from play screen
 {
     var seconds = 5;
     statTimer = setInterval(function(){
@@ -153,7 +159,8 @@ function StatusTimer()
         }
     }, 1000);
 }
-function Finish()
+
+function Finish()  // called on game end to save results and clear play screen
 {
     clearInterval(timer);
     clearInterval(statTimer);
@@ -165,7 +172,7 @@ function Finish()
     questionPhase.classList.add("invisible");
     timerField.classList.add("invisible");
 }
-function WritePastScores()
+function WritePastScores()  // write past scores to high score menu
 {
     for (var i = 0; i < pastScores.length; i++)
     {
@@ -174,10 +181,13 @@ function WritePastScores()
         scoreBoard.appendChild(item);
     }
 }
-function EraseScoreText()
+function EraseScoreText()  // erase score text when leaving high score menu
 {
     scoreBoard.innerHTML="";
 }
+
+/////////////////////////////
+
 
 
 questionPhase.classList.add("invisible");

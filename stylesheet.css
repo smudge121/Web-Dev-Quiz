@@ -1,3 +1,20 @@
+body {
+    background-color: beige;
+}
+
+button {
+    color: white;
+    background-color: darkblue;
+    padding:5px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+button:hover{
+    background-color: darkcyan;
+    cursor: pointer;
+}
 
 nav {
     width: 100%;
@@ -14,6 +31,11 @@ nav a {
     font-weight:400;
     padding-left: 25px;
 }
+a:hover {
+    cursor:pointer;
+    color:gray;
+    font-size: 18px;
+}
 nav p {
     padding-right: 25px;
 }
@@ -28,6 +50,10 @@ main div {
     width: 80%;
     flex-direction: column;
     align-items: center;
+}
+main p {
+    font-size: 20px;
+    text-align: center;
 }
 li {
     padding: 5px;
